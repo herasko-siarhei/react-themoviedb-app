@@ -7,6 +7,7 @@ import Container from 'layout/Container';
 import Header from 'layout/Header';
 import Main from 'layout/Main';
 import Footer from 'layout/Footer';
+import Router from 'routing/Router';
 
 const Application: FC = () => {
     const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ const Application: FC = () => {
         <Container>
             <Header/>
             <Main>
-                Application
+                <Router/>
             </Main>
             <Footer/>
         </Container>
