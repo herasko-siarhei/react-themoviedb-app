@@ -2,7 +2,7 @@ import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User} 
 
 import {firebase} from 'configs/firebase';
 import {tmdb} from 'configs/tmdb';
-import {GetGenreList, GetMovieList, GetTVList} from 'types/tmdb';
+import {GetGenreList, GetMovieDetails, GetMovieList, GetTVDetails, GetTVList} from 'types/tmdb';
 import {Filter} from 'types/filter';
 
 const api = {
@@ -27,10 +27,20 @@ const api = {
                 .then(response => res(response.data))
                 .catch(error => rej(error));
         }),
+        getMovieDetails: (id: number) => new Promise<GetMovieDetails>((res, rej) => {
+            tmdb.get<GetMovieDetails>(`/movie/${id}`)
+                .then(response => res(response.data))
+                .catch(error => rej(error));
+        }),
         getMovieList: (params: Filter) => new Promise<GetMovieList>((res, rej) => {
             tmdb.get<GetMovieList>(`/movie/${params.sorting}`, {
                 params: {with_genres: params.genres.join(','), page: params.page}
             })
+                .then(response => res(response.data))
+                .catch(error => rej(error));
+        }),
+        getTVDetails: (id: number) => new Promise<GetTVDetails>((res, rej) => {
+            tmdb.get<GetTVDetails>(`/tv/${id}`)
                 .then(response => res(response.data))
                 .catch(error => rej(error));
         }),

@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 
 export function useRequest<TData, TParams extends any[]>(promise: (...args: TParams) => Promise<TData>) {
     const [data, setData] = useState<TData | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
     const run = useCallback((...args: TParams) => {
