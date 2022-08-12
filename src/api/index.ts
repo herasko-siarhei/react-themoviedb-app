@@ -1,6 +1,8 @@
 import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User} from 'firebase/auth';
 
 import {firebase} from 'configs/firebase';
+import {tmdb} from 'configs/tmdb';
+import {GetGenreList} from 'types/tmdb';
 
 const api = {
     authentication: {
@@ -18,7 +20,13 @@ const api = {
                 .catch(error => rej(error));
         })
     },
-    database: {}
+    database: {
+        getGenresList: (type: 'movie' | 'tv') => new Promise<GetGenreList>((res, rej) => {
+            tmdb.get<GetGenreList>(`/genre/${type}/list`)
+                .then(response => res(response.data))
+                .catch(error => rej(error));
+        })
+    }
 };
 
 export default api;
