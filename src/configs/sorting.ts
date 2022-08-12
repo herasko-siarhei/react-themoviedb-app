@@ -1,4 +1,6 @@
-import {Sorting} from 'types/sorting';
+import {HistoryOutlined, PlaylistAddOutlined, StarBorderOutlined} from '@mui/icons-material';
+
+import {MyListSorting, Sorting} from 'types/sorting';
 
 export const movieListSortingList: Sorting[] = [
     {label: 'Popular', value: 'popular'},
@@ -14,8 +16,8 @@ export const tvListSortingList: Sorting[] = [
     {label: 'On The Air', value: 'on_the_air'}
 ];
 
-export const myListSortingList: Sorting[] = [
-    {label: 'Favorites', value: 'favorites'},
-    {label: 'Want To Watch', value: 'want_to_watch'},
-    {label: 'Watched', value: 'watched'}
+export const myListSortingList: MyListSorting[] = [
+    {label: 'Favorites', value: 'favorites', icon: StarBorderOutlined},
+    {label: 'Want To Watch', value: 'want_to_watch', icon: PlaylistAddOutlined},
+    {label: 'Watched', value: 'watched', icon: HistoryOutlined}
 ];

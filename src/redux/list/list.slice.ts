@@ -43,7 +43,10 @@ const listSlice = createSlice({
         [listActions.getMovieList.rejected.type]: setRejected,
         [listActions.getTVList.pending.type]: setPending,
         [listActions.getTVList.fulfilled.type]: setFulfilled,
-        [listActions.getTVList.rejected.type]: setRejected
+        [listActions.getTVList.rejected.type]: setRejected,
+        [listActions.getMyList.pending.type]: setPending,
+        [listActions.getMyList.fulfilled.type]: setFulfilled,
+        [listActions.getMyList.rejected.type]: setRejected
     }
 });
 

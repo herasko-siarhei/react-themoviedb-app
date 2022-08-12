@@ -10,6 +10,7 @@ import {refactorGetMovieDetailsData} from 'utils/refactorGetMovieDetailsData';
 import Error from 'components/Error';
 import Loading from 'components/Loading';
 import Image from 'components/Image';
+import MyListButtons from 'components/MyListButtons';
 
 const MovieDetails: FC = () => {
     const {id} = useParams();
@@ -49,6 +50,7 @@ const MovieDetails: FC = () => {
                                 {overview}
                             </Typography>
                         )}
+                        <MyListButtons item={{type: 'movie', id, title, poster}}/>
                     </Stack>
                 </Grid>
             </Grid>

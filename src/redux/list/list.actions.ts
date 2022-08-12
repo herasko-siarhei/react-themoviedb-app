@@ -4,6 +4,7 @@ import api from 'api';
 import listSlice from 'redux/list/list.slice';
 import {refactorGetMovieListData} from 'utils/refactorGetMovieListData';
 import {refactorGetTVListData} from 'utils/refactorGetTVListData';
+import {refactorGetMyListData} from 'utils/refactorGetMyListData';
 import {AppDispatch} from 'types/store';
 import {Filter} from 'types/filter';
 
@@ -28,6 +29,17 @@ const listActions = {
             try {
                 const response = await api.database.getTVList(params);
                 return refactorGetTVListData(response);
+            } catch (error) {
+                return rejectWithValue(error);
+            }
+        }
+    ),
+    getMyList: createAsyncThunk(
+        'list/getMyList',
+        async (params: Filter, {rejectWithValue}) => {
+            try {
+                const response = await api.database.getMyList(params);
+                return refactorGetMyListData(response);
             } catch (error) {
                 return rejectWithValue(error);
             }

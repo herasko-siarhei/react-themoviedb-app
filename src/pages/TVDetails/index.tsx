@@ -10,6 +10,7 @@ import {refactorGetTVDetailsData} from 'utils/refactorGetTVDetailsData';
 import Error from 'components/Error';
 import Loading from 'components/Loading';
 import Image from 'components/Image';
+import MyListButtons from 'components/MyListButtons';
 
 const TVDetails: FC = () => {
     const {id} = useParams();
@@ -49,6 +50,7 @@ const TVDetails: FC = () => {
                                 {overview}
                             </Typography>
                         )}
+                        <MyListButtons item={{type: 'tv', id, title, poster}}/>
                     </Stack>
                 </Grid>
             </Grid>

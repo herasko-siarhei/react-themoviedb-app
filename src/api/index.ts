@@ -1,8 +1,10 @@
 import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User} from 'firebase/auth';
+import {collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc} from 'firebase/firestore';
 
 import {firebase} from 'configs/firebase';
 import {tmdb} from 'configs/tmdb';
 import {GetGenreList, GetMovieDetails, GetMovieList, GetTVDetails, GetTVList} from 'types/tmdb';
+import {GetMyList, My} from 'types/firebase';
 import {Filter} from 'types/filter';
 
 const api = {
@@ -49,6 +51,42 @@ const api = {
                 params: {with_genres: params.genres.join(','), page: params.page}
             })
                 .then(response => res(response.data))
+                .catch(error => rej(error));
+        }),
+        getMyList: (params: Filter) => new Promise<GetMyList>((res, rej) => {
+            //@ts-ignore
+            getDocs(query<My>(collection(firebase.firestore, 'UserList', firebase.auth.currentUser.uid, params.sorting), orderBy('added', 'desc')))
+                .then(response => {
+                    let data: GetMyList = [];
+                    response.forEach(doc => data.push(doc.data()));
+                    res(data);
+                })
+                .catch(error => rej(error));
+        }),
+        addMy: (sortingValue: string, item: My) => new Promise<void>((res, rej) => {
+            // @ts-ignore
+            setDoc(doc(firebase.firestore, 'UserList', firebase.auth.currentUser.uid, sortingValue, `${item.type}-${item.id}`), {
+                ...item,
+                added: Date.now()
+            })
+                .then(() => res())
+                .catch(error => rej(error));
+        }),
+        deleteMy: (sortingValue: string, item: My) => new Promise<void>((res, rej) => {
+            // @ts-ignore
+            deleteDoc(doc(firebase.firestore, 'UserList', firebase.auth.currentUser.uid, sortingValue, `${item.type}-${item.id}`))
+                .then(() => res())
+                .catch(error => rej(error));
+        }),
+        checkMy: (sortingValues: string[], item: My) => new Promise<string[]>((res, rej) => {
+            // @ts-ignore
+            const promiseList = sortingValues.map(sorting => getDoc(doc(firebase.firestore, 'UserList', firebase.auth.currentUser.uid, sorting, `${item.type}-${item.id}`)));
+            Promise.all(promiseList)
+                .then(responseList => {
+                    let data: string[] = [];
+                    responseList.map((response, index) => response.exists() && data.push(sortingValues[index]));
+                    res(data);
+                })
                 .catch(error => rej(error));
         })
     }
