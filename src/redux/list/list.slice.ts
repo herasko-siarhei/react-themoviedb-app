@@ -6,7 +6,7 @@ import {ListFulfilledAction, ListRejectedAction, ListState} from 'redux/list/lis
 const listState: ListState = {
     list: [],
     total: 0,
-    loading: false,
+    loading: true,
     error: null
 };
 
