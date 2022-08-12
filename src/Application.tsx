@@ -1,10 +1,19 @@
 import React, {FC} from 'react';
 
+import Container from 'layout/Container';
+import Header from 'layout/Header';
+import Main from 'layout/Main';
+import Footer from 'layout/Footer';
+
 const Application: FC = () => {
     return (
-        <div>
-            Application
-        </div>
+        <Container>
+            <Header/>
+            <Main>
+                Application
+            </Main>
+            <Footer/>
+        </Container>
     );
 };
 
